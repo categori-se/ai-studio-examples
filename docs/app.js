@@ -14,6 +14,7 @@ import {
 
 let selectedProjectId = projects[0].id;
 let activeTab = "evidence";
+let selectedTourFile = "project.yaml";
 
 const elements = {
   projectList: document.querySelector("#project-list"),
@@ -32,7 +33,13 @@ const elements = {
   releaseRecord: document.querySelector("#release-record"),
   evidenceGrid: document.querySelector("#evidence-grid"),
   manifestCode: document.querySelector("#manifest-code"),
-  rubricView: document.querySelector("#rubric-view")
+  rubricView: document.querySelector("#rubric-view"),
+  tourProject: document.querySelector("#tour-project"),
+  tourModel: document.querySelector("#tour-model"),
+  tourFileList: document.querySelector("#tour-file-list"),
+  tourFilePath: document.querySelector("#tour-file-path"),
+  tourFileContent: document.querySelector("#tour-file-content"),
+  tourTranscript: document.querySelector("#tour-transcript")
 };
 
 const escapeHtml = (value) => String(value)
@@ -41,6 +48,73 @@ const escapeHtml = (value) => String(value)
   .replaceAll(">", "&gt;")
   .replaceAll('"', "&quot;")
   .replaceAll("'", "&#039;");
+
+function tourFiles(project) {
+  return [
+    {
+      path: "project.yaml",
+      kind: "manifest",
+      content: manifestFor(project)
+    },
+    {
+      path: "brief/question.md",
+      kind: "brief",
+      content: `# ${project.brief?.deliverable || "Review brief"}\n\n${project.brief?.question || "No question recorded."}\n\nAudience: ${project.brief?.audience || "Not recorded"}\n`
+    },
+    {
+      path: "evidence/findings.json",
+      kind: "evidence",
+      content: JSON.stringify({projectId: project.id, findings: project.claims}, null, 2)
+    },
+    {
+      path: "rubrics/review.yaml",
+      kind: "rubric",
+      content: JSON.stringify(rubricFor(project) || {status: "not-defined"}, null, 2)
+    },
+    {
+      path: "records/release.json",
+      kind: "record",
+      content: JSON.stringify(project.release || {status: "not-recorded"}, null, 2)
+    }
+  ];
+}
+
+function renderTourFiles() {
+  const project = projects.find((item) => item.id === selectedProjectId) || projects[0];
+  const files = tourFiles(project);
+  if (!files.some((file) => file.path === selectedTourFile)) selectedTourFile = files[0].path;
+  elements.tourProject.innerHTML = projects.map((item) =>
+    `<option value="${escapeHtml(item.id)}"${item.id === project.id ? " selected" : ""}>${escapeHtml(item.name)}</option>`
+  ).join("");
+  elements.tourFileList.innerHTML = files.map((file) => `
+    <div role="listitem"><button type="button" data-tour-file="${escapeHtml(file.path)}" aria-pressed="${file.path === selectedTourFile}">
+      <span aria-hidden="true">${file.kind === "record" ? "◇" : "·"}</span><code>${escapeHtml(file.path)}</code>
+    </button></div>`).join("");
+  const selected = files.find((file) => file.path === selectedTourFile) || files[0];
+  elements.tourFilePath.textContent = selected.path;
+  elements.tourFileContent.textContent = selected.content;
+  elements.tourTranscript.innerHTML = `
+    <p class="tour-system"><strong>Boundary</strong> This assistant can discuss only the embedded synthetic project and the selected read-only file.</p>
+    <p><strong>Mock assistant</strong> I can help trace the brief, declared evidence, evaluation, expert decision, and release record. Choose a question below.</p>`;
+}
+
+function tourReply(kind) {
+  const project = projects.find((item) => item.id === selectedProjectId) || projects[0];
+  const file = tourFiles(project).find((item) => item.path === selectedTourFile);
+  const release = projectReleasePosture(project);
+  const replies = {
+    scope: `The recorded question is “${project.brief?.question || "not recorded"}” The assistant is limited to declared sources and the ${file?.path || "selected file"}; a domain expert still owns the final judgment.`,
+    evidence: project.claims.some((claim) => claim.refs.length === 0)
+      ? "At least one finding has no declared evidence reference. The workflow must keep that gap visible rather than infer support."
+      : "Every displayed finding names a source, but source citation alone does not establish correctness. The rubric and expert review remain separate gates.",
+    release: release.state === "verified"
+      ? "The synthetic record is contract-bound: evaluation, expert decision, artifact digest, release record, and handoff agree. A real deployment would also verify the stored bytes and release authority."
+      : `No. Current posture: ${release.label}. A configured target or successful model response is not release evidence.`
+  };
+  const model = elements.tourModel.value === "release" ? "Release reviewer" : "Evidence guide";
+  elements.tourTranscript.innerHTML += `<p><strong>${escapeHtml(model)}</strong> ${escapeHtml(replies[kind] || replies.scope)}</p>`;
+  elements.tourTranscript.scrollTop = elements.tourTranscript.scrollHeight;
+}
 
 function field(label, value, missingText = "Not recorded") {
   const missing = value === null || value === undefined || value === "";
@@ -198,6 +272,8 @@ elements.projectList.addEventListener("click", (event) => {
   if (!button) return;
   selectedProjectId = button.dataset.project;
   renderProject();
+  selectedTourFile = "project.yaml";
+  renderTourFiles();
 });
 
 document.querySelector(".tab-list").addEventListener("click", (event) => {
@@ -223,5 +299,25 @@ document.querySelector("[data-open-tab='manifest']").addEventListener("click", (
   document.querySelector("#panel-manifest").scrollIntoView({ behavior: "smooth", block: "nearest" });
 });
 
+elements.tourProject.addEventListener("change", () => {
+  selectedProjectId = elements.tourProject.value;
+  selectedTourFile = "project.yaml";
+  renderTourFiles();
+  renderProject();
+});
+
+elements.tourFileList.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-tour-file]");
+  if (!button) return;
+  selectedTourFile = button.dataset.tourFile;
+  renderTourFiles();
+});
+
+document.querySelector(".tour-prompts").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-tour-prompt]");
+  if (button) tourReply(button.dataset.tourPrompt);
+});
+
 renderProject();
 activateTab(activeTab);
+renderTourFiles();

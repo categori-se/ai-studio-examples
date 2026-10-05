@@ -19,12 +19,12 @@ The browser demo and portable portfolio make every stage inspectable:
 
 This is the niche the examples are designed to test: evidence-to-decision-to-release continuity for small expert teams doing evidence-sensitive research, assurance, analysis, and client work. It is not a general-purpose chatbot, coding agent, data-pipeline builder, or automated compliance engine. The reusable product is the governance pattern, not the sector vocabulary.
 
-## Live demo
+## Demo status
 
-**[Explore the read-only public demo](https://categori-se.github.io/ai-studio-examples/).** It was deployed by the repository's workflow from the immutable `v0.4.0` release. The workflow required the protected tag and supplied SHA to resolve to the same commit in public `main`, then verified every served asset against [`demo-provenance.json`](./demo-provenance.json).
+**Live-demo status:** the v0.4.0 demo is published on GitHub Pages. This tree prepares v0.5.0 with a static project/file/model workspace tour; [`demo-provenance.json`](./demo-provenance.json) binds every browser asset to the planned immutable `v0.5.0` source path, and repository tests reject file or source-link drift. Until v0.5.0 is tagged and deployed by the protected workflow, use its checked source locally and treat v0.4.0 as the current public release.
 
-- [Inspect the exact v0.4.0 release source](https://github.com/categori-se/ai-studio-examples/tree/v0.4.0)
-- [Run the deterministic v0.4.0 local demo](https://github.com/categori-se/ai-studio-examples/tree/v0.4.0/local-demo)
+- [Browse the current public example source](https://github.com/categori-se/ai-studio-examples)
+- [Inspect the current v0.4.0 release](https://github.com/categori-se/ai-studio-examples/tree/v0.4.0/local-demo)
 - Browse [`portfolio/`](./portfolio/) for the version 0.4 service-access example and its digest-linked evidence chain
 
 The hosted route is intentionally static and synthetic. It cannot start models or compute, upload content, read private repositories, create pull requests, approve decisions, publish releases, or deploy infrastructure. The production build rejects an expanded file set, network APIs, externally hosted runtime assets, private infrastructure identifiers, and a package larger than 128 KiB.
@@ -68,9 +68,9 @@ The private service is a coordination layer, not a prerequisite for using the op
 Node.js 24 or later is required. The packages are not yet published to npm, so clone the three repositories as siblings and install the two local packages explicitly:
 
 ```bash
-git clone --branch v0.4.0 --depth 1 https://github.com/categori-se/ai-studio-contracts.git
-git clone --branch v0.4.0 --depth 1 https://github.com/categori-se/ai-studio-core.git
-git clone --branch v0.4.0 --depth 1 https://github.com/categori-se/ai-studio-examples.git
+git clone --branch v0.5.0 --depth 1 https://github.com/categori-se/ai-studio-contracts.git studio-contracts
+git clone --branch v0.5.0 --depth 1 https://github.com/categori-se/ai-studio-core.git studio-core
+git clone --branch v0.5.0 --depth 1 https://github.com/categori-se/ai-studio-examples.git studio-examples
 
 cd studio-core
 npm install --no-save --package-lock=false ../studio-contracts
