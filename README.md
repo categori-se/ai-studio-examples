@@ -21,10 +21,10 @@ This is the niche the examples are designed to test: evidence-to-decision-to-rel
 
 ## Live demo
 
-**[Explore the read-only public demo](https://categori-se.github.io/studio-examples/).** It was deployed by the repository's workflow from the immutable `v0.4.0` release. The workflow required the protected tag and supplied SHA to resolve to the same commit in public `main`, then verified every served asset against [`demo-provenance.json`](./demo-provenance.json).
+**[Explore the read-only public demo](https://categori-se.github.io/ai-studio-examples/).** It was deployed by the repository's workflow from the immutable `v0.4.0` release. The workflow required the protected tag and supplied SHA to resolve to the same commit in public `main`, then verified every served asset against [`demo-provenance.json`](./demo-provenance.json).
 
-- [Inspect the exact v0.4.0 release source](https://github.com/categori-se/studio-examples/tree/v0.4.0)
-- [Run the deterministic v0.4.0 local demo](https://github.com/categori-se/studio-examples/tree/v0.4.0/local-demo)
+- [Inspect the exact v0.4.0 release source](https://github.com/categori-se/ai-studio-examples/tree/v0.4.0)
+- [Run the deterministic v0.4.0 local demo](https://github.com/categori-se/ai-studio-examples/tree/v0.4.0/local-demo)
 - Browse [`portfolio/`](./portfolio/) for the version 0.4 service-access example and its digest-linked evidence chain
 
 The hosted route is intentionally static and synthetic. It cannot start models or compute, upload content, read private repositories, create pull requests, approve decisions, publish releases, or deploy infrastructure. The production build rejects an expanded file set, network APIs, externally hosted runtime assets, private infrastructure identifiers, and a package larger than 128 KiB.
@@ -68,9 +68,9 @@ The private service is a coordination layer, not a prerequisite for using the op
 Node.js 24 or later is required. The packages are not yet published to npm, so clone the three repositories as siblings and install the two local packages explicitly:
 
 ```bash
-git clone --branch v0.4.0 --depth 1 https://github.com/categori-se/studio-contracts.git
-git clone --branch v0.4.0 --depth 1 https://github.com/categori-se/studio-core.git
-git clone --branch v0.4.0 --depth 1 https://github.com/categori-se/studio-examples.git
+git clone --branch v0.4.0 --depth 1 https://github.com/categori-se/ai-studio-contracts.git
+git clone --branch v0.4.0 --depth 1 https://github.com/categori-se/ai-studio-core.git
+git clone --branch v0.4.0 --depth 1 https://github.com/categori-se/ai-studio-examples.git
 
 cd studio-core
 npm install --no-save --package-lock=false ../studio-contracts
@@ -139,6 +139,6 @@ The bucket uses `DeletionPolicy: Delete`, but CloudFormation cannot delete a non
 
 ## Contributing
 
-Good contributions are small enough to understand in one review and answer a real integration question. [Open an issue](https://github.com/categori-se/studio-examples/issues) with the workflow you want to demonstrate and why an existing example is insufficient. Examples must be synthetic, deterministic, safe to copy, covered by tests, and consistent with [`CONTRIBUTING.md`](./CONTRIBUTING.md).
+Good contributions are small enough to understand in one review and answer a real integration question. [Open an issue](https://github.com/categori-se/ai-studio-examples/issues) with the workflow you want to demonstrate and why an existing example is insufficient. Examples must be synthetic, deterministic, safe to copy, covered by tests, and consistent with [`CONTRIBUTING.md`](./CONTRIBUTING.md).
 
 The examples are licensed under the Apache License, Version 2.0. No hosted subscription is required to copy, run, or adapt them.
