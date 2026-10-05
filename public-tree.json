@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "repository": "categori-se/studio-examples",
+  "repository": "categori-se/ai-studio-examples",
   "files": [
     ".github/workflows/ci.yml",
     ".github/workflows/pages.yml",
