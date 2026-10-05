@@ -41,6 +41,110 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+.workspace-tour {
+  padding: 76px 5vw;
+  border-top: 1px solid var(--line);
+  background: #eef0eb;
+}
+
+.tour-boundary-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.tour-boundary-line span { display: inline-flex; align-items: center; gap: 6px; }
+.tour-boundary-line b {
+  display: inline-grid;
+  width: 17px;
+  height: 17px;
+  place-items: center;
+  border: 1px solid var(--line-dark);
+  border-radius: 50%;
+  color: var(--pine);
+  font: 700 10px/1 var(--mono);
+}
+
+.tour-shell {
+  overflow: hidden;
+  border: 1px solid #273a35;
+  border-radius: 10px;
+  color: #dbe5e1;
+  background: #101918;
+  box-shadow: var(--shadow);
+}
+
+.tour-toolbar {
+  display: flex;
+  min-height: 58px;
+  align-items: center;
+  gap: 18px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #2a3a36;
+  background: #15201e;
+}
+
+.tour-toolbar > div { display: grid; margin-right: auto; }
+.tour-toolbar strong { font-size: 13px; }
+.tour-toolbar small { color: #8fa09b; font-size: 9px; text-transform: uppercase; }
+.tour-toolbar label { display: grid; gap: 2px; color: #91a29d; font-size: 9px; text-transform: uppercase; }
+.tour-toolbar select {
+  min-width: 190px;
+  padding: 5px 24px 5px 7px;
+  border: 1px solid #3a4b47;
+  border-radius: 4px;
+  color: #e4ece9;
+  background: #1c2926;
+  font-size: 11px;
+  text-transform: none;
+}
+
+.tour-session-state { color: #9caaa6; font-size: 10px; white-space: nowrap; }
+.tour-session-state i { display: inline-block; width: 7px; height: 7px; margin-right: 5px; border-radius: 50%; background: #7d8d88; }
+.tour-workspace { display: grid; min-height: 430px; grid-template-columns: minmax(190px, 20%) minmax(320px, 1fr) minmax(280px, 32%); }
+.tour-files, .tour-editor, .tour-assistant { min-width: 0; }
+.tour-files, .tour-editor { border-right: 1px solid #2a3a36; }
+.tour-pane-title { display: flex; min-height: 40px; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; border-bottom: 1px solid #2a3a36; }
+.tour-pane-title strong { font-size: 11px; }
+.tour-pane-title small, .tour-pane-title code { overflow: hidden; color: #869892; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+.tour-files [role="list"] { padding: 6px 0; }
+.tour-files button { display: flex; width: 100%; gap: 7px; padding: 6px 10px; border: 0; color: #aebdb8; background: transparent; text-align: left; cursor: pointer; }
+.tour-files button:hover, .tour-files button[aria-pressed="true"] { color: #fff; background: #22302d; }
+.tour-files button[aria-pressed="true"] { box-shadow: inset 2px 0 #75c9a6; }
+.tour-files code { overflow: hidden; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.tour-editor pre { height: 389px; margin: 0; overflow: auto; border: 0; border-radius: 0; color: #cbd8d4; background: #111a19; }
+.tour-editor pre code { font-size: 10px; line-height: 1.6; }
+.tour-assistant { display: grid; grid-template-rows: auto 1fr auto; }
+.tour-transcript { overflow: auto; padding: 10px 12px; }
+.tour-transcript p { margin: 0 0 9px; padding-left: 9px; border-left: 2px solid #40534e; color: #bccac5; font-size: 11px; }
+.tour-transcript p strong { display: block; margin-bottom: 2px; color: #eff5f2; font-size: 10px; }
+.tour-transcript .tour-system { border-left-color: #d1a44a; color: #aab8b4; }
+.tour-prompts { display: grid; gap: 5px; padding: 9px; border-top: 1px solid #2a3a36; }
+.tour-prompts button { padding: 7px 9px; border: 1px solid #374a45; border-radius: 4px; color: #d5dfdc; background: #1b2825; font-size: 10px; text-align: left; cursor: pointer; }
+.tour-prompts button:hover { border-color: #75c9a6; color: #fff; }
+.tour-private-note { margin: 12px 0 0; color: var(--muted); font-size: 12px; }
+
+@media (max-width: 900px) {
+  .tour-toolbar { align-items: stretch; flex-wrap: wrap; }
+  .tour-toolbar > div { flex-basis: 100%; }
+  .tour-toolbar label { flex: 1 1 220px; }
+  .tour-toolbar select { width: 100%; min-width: 0; }
+  .tour-workspace { grid-template-columns: 180px 1fr; }
+  .tour-editor { border-right: 0; }
+  .tour-assistant { min-height: 300px; grid-column: 1 / -1; border-top: 1px solid #2a3a36; }
+}
+
+@media (max-width: 620px) {
+  .workspace-tour { padding: 58px 4vw; }
+  .tour-workspace { display: block; }
+  .tour-files, .tour-editor { border-right: 0; border-bottom: 1px solid #2a3a36; }
+  .tour-files [role="list"] { max-height: 170px; overflow: auto; }
+  .tour-editor pre { height: 300px; }
+}
+
 a {
   color: inherit;
 }

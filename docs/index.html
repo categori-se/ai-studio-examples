@@ -26,11 +26,12 @@
         </span>
       </a>
       <nav aria-label="Primary navigation">
+        <a href="#workspace-tour">Workspace</a>
         <a href="#portfolio">Portfolio</a>
         <a href="#record">The record</a>
         <a href="#demo-boundaries">Boundaries</a>
         <a href="#architecture">Architecture</a>
-        <a class="nav-repo" href="https://github.com/categori-se/studio-examples/tree/v0.4.0/docs">View v0.4.0 source</a>
+        <a class="nav-repo" href="https://github.com/categori-se/ai-studio-examples/tree/v0.5.0/docs">View v0.5.0 source</a>
       </nav>
     </header>
 
@@ -46,7 +47,7 @@
             inspectable instead of disappearing inside a chat transcript.
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#portfolio">Explore the portfolio</a>
+            <a class="button button-primary" href="#workspace-tour">Open the safe workspace demo</a>
             <a class="button button-secondary" href="#use-it">Run it yourself</a>
           </div>
           <p class="privacy-note">
@@ -98,6 +99,59 @@
             <p>The build fails if this complete static demo exceeds 128 KiB. Cached file delivery is designed to remain far below $0.10 for an ordinary visitor-day; anonymous traffic cannot support a hard per-person billing guarantee.</p>
           </details>
         </div>
+      </section>
+
+      <section class="workspace-tour" id="workspace-tour" aria-labelledby="workspace-tour-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Interactive product tour · static simulation</p>
+            <h2 id="workspace-tour-title">Browse a project, inspect a file, and ask a bounded assistant</h2>
+          </div>
+          <p>This reproduces the private Studio’s compact working rhythm with synthetic files and deterministic replies. Nothing here connects to a repository, storage account, model, or paid resource.</p>
+        </div>
+
+        <div class="tour-boundary-line" aria-label="Public workspace boundaries">
+          <span><b aria-hidden="true">i</b> Three embedded synthetic projects</span>
+          <span><b aria-hidden="true">i</b> Deterministic mock assistants</span>
+          <span><b aria-hidden="true">i</b> No login, upload, write, or resource start</span>
+        </div>
+
+        <div class="tour-shell">
+          <header class="tour-toolbar">
+            <div><strong>Studio workspace</strong><small>public simulation</small></div>
+            <label>Project
+              <select id="tour-project" aria-label="Select a synthetic project"></select>
+            </label>
+            <label>Assistant
+              <select id="tour-model" aria-label="Select a deterministic mock assistant">
+                <option value="evidence">Evidence guide · deterministic mock</option>
+                <option value="release">Release reviewer · deterministic mock</option>
+              </select>
+            </label>
+            <span class="tour-session-state"><i aria-hidden="true"></i> Static · no session</span>
+          </header>
+
+          <div class="tour-workspace">
+            <aside class="tour-files" aria-labelledby="tour-files-title">
+              <div class="tour-pane-title"><strong id="tour-files-title">Files</strong><small>embedded read-only tree</small></div>
+              <div id="tour-file-list" role="list"></div>
+            </aside>
+            <section class="tour-editor" aria-labelledby="tour-editor-title">
+              <div class="tour-pane-title"><strong id="tour-editor-title">Preview</strong><code id="tour-file-path"></code></div>
+              <pre><code id="tour-file-content"></code></pre>
+            </section>
+            <section class="tour-assistant" aria-labelledby="tour-assistant-title">
+              <div class="tour-pane-title"><strong id="tour-assistant-title">Assistant</strong><small>scripted locally</small></div>
+              <div id="tour-transcript" class="tour-transcript" aria-live="polite"></div>
+              <div class="tour-prompts" aria-label="Safe demonstration prompts">
+                <button type="button" data-tour-prompt="scope">What constrains this work?</button>
+                <button type="button" data-tour-prompt="evidence">What evidence is missing?</button>
+                <button type="button" data-tour-prompt="release">Can this be released?</button>
+              </div>
+            </section>
+          </div>
+        </div>
+        <p class="tour-private-note"><strong>In the private Studio:</strong> signing in can open one owner-scoped session for multiple turns. It ends when you close it or leave, after 15 idle minutes, or at its one-hour ceiling. The public simulation has no corresponding API or compute permission.</p>
       </section>
 
       <section class="demo-shell" id="portfolio" aria-labelledby="portfolio-title">
@@ -322,9 +376,9 @@
         <div class="terminal" aria-label="Commands to run the examples">
           <div class="terminal-bar"><span></span><span></span><span></span><small>local shell</small></div>
           <pre><code><span class="terminal-comment"># clone the three public packages as siblings</span>
-git clone --branch v0.4.0 --depth 1 https://github.com/categori-se/studio-contracts.git
-git clone --branch v0.4.0 --depth 1 https://github.com/categori-se/studio-core.git
-git clone --branch v0.4.0 --depth 1 https://github.com/categori-se/studio-examples.git
+git clone --branch v0.5.0 --depth 1 https://github.com/categori-se/ai-studio-contracts.git studio-contracts
+git clone --branch v0.5.0 --depth 1 https://github.com/categori-se/ai-studio-core.git studio-core
+git clone --branch v0.5.0 --depth 1 https://github.com/categori-se/ai-studio-examples.git studio-examples
 
 <span class="terminal-comment"># link exact local sources; packages are not on npm yet</span>
 cd studio-core
@@ -352,19 +406,19 @@ python3 -m http.server 8000 --directory docs</code></pre>
           <p>Each repository is independently readable and released under Apache-2.0.</p>
         </div>
         <div class="repo-grid">
-          <a class="repo-card" href="https://github.com/categori-se/studio-contracts">
+          <a class="repo-card" href="https://github.com/categori-se/ai-studio-contracts">
             <span class="repo-index">01 / Contracts</span>
             <h3>studio-contracts</h3>
             <p>Provider-neutral schemas and validators for applications, projects, workspaces, document evaluation, expert decisions, release records, and GenAI telemetry.</p>
             <span class="repo-link">Explore contracts <b aria-hidden="true">↗</b></span>
           </a>
-          <a class="repo-card" href="https://github.com/categori-se/studio-core">
+          <a class="repo-card" href="https://github.com/categori-se/ai-studio-core">
             <span class="repo-index">02 / Local runtime</span>
             <h3>studio-core</h3>
             <p>A local-first UI shell, CLI, project-file loader, plugin SDK, and deterministic mock provider for composing your own workspace.</p>
             <span class="repo-link">Explore core <b aria-hidden="true">↗</b></span>
           </a>
-          <a class="repo-card" href="https://github.com/categori-se/studio-examples">
+          <a class="repo-card" href="https://github.com/categori-se/ai-studio-examples">
             <span class="repo-index">03 / Reference use</span>
             <h3>studio-examples</h3>
             <p>Safe digest-linked evidence chains, no-content telemetry, local demonstrations, and low-idle-cost static deployment infrastructure with no account-specific settings.</p>
@@ -383,9 +437,9 @@ python3 -m http.server 8000 --directory docs</code></pre>
         <p>A sector-neutral, dependency-free workflow demonstrated with clearly labeled synthetic records.</p>
       </div>
       <nav aria-label="Footer navigation">
-        <a href="https://github.com/categori-se/studio-contracts">Contracts</a>
-        <a href="https://github.com/categori-se/studio-core">Core</a>
-        <a href="https://github.com/categori-se/studio-examples">Examples</a>
+        <a href="https://github.com/categori-se/ai-studio-contracts">Contracts</a>
+        <a href="https://github.com/categori-se/ai-studio-core">Core</a>
+        <a href="https://github.com/categori-se/ai-studio-examples">Examples</a>
         <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a>
       </nav>
     </footer>

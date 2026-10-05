@@ -144,6 +144,12 @@ test("public reference page is dependency-free and explains both operating modes
   assert.match(html, /Planned managed operations/);
   assert.match(html, /no API, analytics, or telemetry calls after static assets load/);
   assert.match(html, /No operating permissions/);
+  assert.match(html, /Open the safe workspace demo/);
+  assert.match(html, /Browse a project, inspect a file, and ask a bounded assistant/);
+  assert.match(html, /Three embedded synthetic projects/);
+  assert.match(html, /Deterministic mock assistants/);
+  assert.match(html, /Static · no session/);
+  assert.match(html, /ends when you close it or leave, after 15 idle minutes, or at its one-hour ceiling/);
   assert.match(html, /128 KiB packaged ceiling/);
   assert.match(html, /far below \$0\.10 for an ordinary visitor-day/);
   assert.match(html, /connect-src 'none'/);
@@ -162,6 +168,9 @@ test("public reference page is dependency-free and explains both operating modes
   assert.doesNotMatch(script, /sendBeacon\s*\(/);
   assert.doesNotMatch(model, /\b(?:fetch|XMLHttpRequest|WebSocket|EventSource)\s*\(/);
   assert.doesNotMatch(model, /sendBeacon\s*\(/);
+  assert.match(script, /function tourFiles/);
+  assert.match(script, /function tourReply/);
+  assert.match(script, /data-tour-file/);
 });
 
 test("the complete static public demo remains below its 128 KiB packaged ceiling", async () => {
@@ -236,13 +245,13 @@ test("demo provenance binds the planned public release to every static asset", a
     "version"
   ]);
   assert.equal(provenance.schema_version, 1);
-  assert.equal(provenance.repository, "categori-se/studio-examples");
-  assert.equal(provenance.tag, "v0.4.0");
-  assert.equal(provenance.version, "0.4.0");
+  assert.equal(provenance.repository, "categori-se/ai-studio-examples");
+  assert.equal(provenance.tag, "v0.5.0");
+  assert.equal(provenance.version, "0.5.0");
   assert.equal(provenance.source_path, "docs");
   assert.equal(
     provenance.source_url,
-    "https://github.com/categori-se/studio-examples/tree/v0.4.0/docs"
+    "https://github.com/categori-se/ai-studio-examples/tree/v0.5.0/docs"
   );
   assert.deepEqual(Object.keys(provenance.files).sort(), expectedAssets);
 
@@ -257,7 +266,7 @@ test("demo provenance binds the planned public release to every static asset", a
 });
 
 test("published verification compares each browser-served asset to tagged provenance", async () => {
-  const expectedAssets = await verifyLocalDemo({tag: "v0.4.0"});
+  const expectedAssets = await verifyLocalDemo({tag: "v0.5.0"});
   const originalFetch = globalThis.fetch;
   let driftApp = false;
   globalThis.fetch = async (request) => {
@@ -269,7 +278,7 @@ test("published verification compares each browser-served asset to tagged proven
   };
   try {
     const options = {
-      url: "https://categori-se.github.io/studio-examples/",
+      url: "https://categori-se.github.io/ai-studio-examples/",
       releaseSha: "a".repeat(40),
       expectedAssets,
       attempts: 1,
@@ -282,6 +291,10 @@ test("published verification compares each browser-served asset to tagged proven
       () => verifyPublishedDemo({...options, url: "https://example.invalid/studio-examples/"}),
       /published demo URL must equal/
     );
+    await assert.rejects(
+      () => verifyPublishedDemo({...options, url: "https://categori-se.github.io/studio-examples/"}),
+      /published demo URL must equal/
+    );
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -291,6 +304,20 @@ test("public workflows scan first and Pages deploys only an exact tag/SHA", asyn
   const ci = await readFile(new URL("../.github/workflows/ci.yml", import.meta.url), "utf8");
   assert.ok(ci.includes("npm run check:public-tree --prefix studio-examples"));
   assert.ok(ci.indexOf("check:public-tree") < ci.indexOf("npm install"));
+
+  const packageMetadata = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
+  const workflow = parseStudioDocument(ci, {filename: "ci.yml"});
+  const checkouts = Object.values(workflow.jobs).flatMap((job) => job.steps || [])
+    .filter((step) => step.with?.repository?.startsWith("categori-se/ai-studio-"));
+  assert.equal(checkouts.length, 2, "CI must select the exact Contracts and Core releases");
+  for (const name of ["studio-contracts", "studio-core"]) {
+    const version = packageMetadata.dependencies[`@categori/${name}`];
+    assert.equal(version, packageMetadata.version);
+    const selected = checkouts.filter((step) => step.with.repository === `categori-se/ai-${name}`);
+    assert.equal(selected.length, 1, `CI must select one ${name} release`);
+    assert.equal(selected[0].with.ref, `v${version}`,
+      `CI must test the same ${name} release declared by the package`);
+  }
 
   const pages = await readFile(new URL("../.github/workflows/pages.yml", import.meta.url), "utf8");
   for (const required of [
@@ -306,12 +333,14 @@ test("public workflows scan first and Pages deploys only an exact tag/SHA", asyn
     "upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f v7.0.0/node24"
   ]) assert.ok(pages.includes(required), required);
   assert.doesNotMatch(pages, /main:\/docs/);
+  const pagesWorkflow = parseStudioDocument(pages, {filename: "pages.yml"});
+  assert.equal(pagesWorkflow.on.workflow_dispatch.inputs.release_tag.default, `v${packageMetadata.version}`);
 });
 
-test("public quick starts use the exact v0.4.0 dependency graph", async () => {
+test("public quick starts pin the exact coordinated v0.5 release", async () => {
   for (const relative of ["../README.md", "../docs/index.html"]) {
     const content = await readFile(new URL(relative, import.meta.url), "utf8");
-    assert.equal((content.match(/git clone --branch v0\.4\.0 --depth 1/g) || []).length, 3);
+    assert.equal((content.match(/git clone --branch v0\.5\.0 --depth 1/g) || []).length, 3);
     assert.doesNotMatch(content, /git clone https:\/\/github\.com\/categori-se\/studio-/);
   }
 });

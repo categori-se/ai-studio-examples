@@ -5,8 +5,8 @@ import {lstat, readFile, readdir} from "node:fs/promises";
 import {dirname, join, resolve} from "node:path";
 import {fileURLToPath, pathToFileURL} from "node:url";
 
-const REPOSITORY = "categori-se/studio-examples";
-const PAGES_URL = "https://categori-se.github.io/studio-examples/";
+const REPOSITORY = "categori-se/ai-studio-examples";
+const PAGES_URL = "https://categori-se.github.io/ai-studio-examples/";
 const DEMO_FILES = [".nojekyll", "app.js", "demo-model.js", "favicon.svg", "index.html", "styles.css"];
 const PUBLISHED_FILES = DEMO_FILES.filter((filename) => filename !== ".nojekyll");
 const decoder = new TextDecoder("utf-8", {fatal: true});
@@ -87,7 +87,7 @@ function validatedPagesUrl(value) {
   const url = new URL(value);
   const normalizedPath = url.pathname.endsWith("/") ? url.pathname : `${url.pathname}/`;
   if (url.protocol !== "https:" || url.hostname !== "categori-se.github.io" ||
-      normalizedPath !== "/studio-examples/" || url.username || url.password || url.port || url.search || url.hash) {
+      normalizedPath !== "/ai-studio-examples/" || url.username || url.password || url.port || url.search || url.hash) {
     throw new Error(`published demo URL must equal ${PAGES_URL}`);
   }
   return new URL(PAGES_URL);
