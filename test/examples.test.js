@@ -130,10 +130,10 @@ test("public reference page is dependency-free and explains both operating modes
 
   assert.match(html, /Content-Security-Policy/);
   assert.match(html, /Governed expert work/);
-  assert.match(html, /Keep evidence, AI assistance, expert judgment, and handoff connected/);
-  assert.match(html, /service planning, engineering assurance, and research/);
-  assert.match(html, /This is not a chatbot or an automated professional verdict/);
-  assert.match(html, /The reusable product is the governance pattern, not the sector vocabulary/);
+  assert.match(html, /Keep your project moving—from your computer to the web/);
+  assert.match(html, /general project development/);
+  assert.match(html, /Keep project notes, instructions and history independently/);
+  assert.match(html, /The environment is in development/);
   assert.match(html, /research synthesis, engineering assurance, policy review, due diligence/);
   assert.match(html, /A configured target is not a verified release/);
   assert.match(html, /Apache-2.0 · portable · complete example/);
@@ -246,12 +246,12 @@ test("demo provenance binds the planned public release to every static asset", a
   ]);
   assert.equal(provenance.schema_version, 1);
   assert.equal(provenance.repository, "categori-se/ai-studio-examples");
-  assert.equal(provenance.tag, "v0.5.0");
-  assert.equal(provenance.version, "0.5.0");
+  assert.equal(provenance.tag, "v0.5.1");
+  assert.equal(provenance.version, "0.5.1");
   assert.equal(provenance.source_path, "docs");
   assert.equal(
     provenance.source_url,
-    "https://github.com/categori-se/ai-studio-examples/tree/v0.5.0/docs"
+    "https://github.com/categori-se/ai-studio-examples/tree/v0.5.1/docs"
   );
   assert.deepEqual(Object.keys(provenance.files).sort(), expectedAssets);
 
@@ -266,7 +266,7 @@ test("demo provenance binds the planned public release to every static asset", a
 });
 
 test("published verification compares each browser-served asset to tagged provenance", async () => {
-  const expectedAssets = await verifyLocalDemo({tag: "v0.5.0"});
+  const expectedAssets = await verifyLocalDemo({tag: "v0.5.1"});
   const originalFetch = globalThis.fetch;
   let driftApp = false;
   globalThis.fetch = async (request) => {
@@ -312,7 +312,6 @@ test("public workflows scan first and Pages deploys only an exact tag/SHA", asyn
   assert.equal(checkouts.length, 2, "CI must select the exact Contracts and Core releases");
   for (const name of ["studio-contracts", "studio-core"]) {
     const version = packageMetadata.dependencies[`@categori/${name}`];
-    assert.equal(version, packageMetadata.version);
     const selected = checkouts.filter((step) => step.with.repository === `categori-se/ai-${name}`);
     assert.equal(selected.length, 1, `CI must select one ${name} release`);
     assert.equal(selected[0].with.ref, `v${version}`,

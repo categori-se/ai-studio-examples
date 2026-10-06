@@ -1,8 +1,25 @@
-# Studio Examples: Governed Expert Work
+# AI Studio Examples: Keep Your Project Moving
 
-Apache-2.0 reference workflows for keeping evidence, bounded AI assistance, evaluation, accountable expert judgment, and an exact release or handoff connected. The pattern is sector-neutral: adapt the project vocabulary, evidence types, rubric, and qualified roles to your domain while retaining the same inspectable boundaries.
+AI Studio is being developed as a web-based orchestration environment for general project development and for integrating AI workflows into client projects. Its purpose is to make it easier to move between work on a local computer and work on the web, while keeping the project's history, instructions and decisions connected.
 
-The included detailed portfolio is a **synthetic public-service planning scenario**. The browser demo also includes engineering-assurance and research-synthesis examples so readers can see how the same contracts travel across domains. Everything is fictional: it does not assess a real project, client, standard, or professional outcome. It shows how to preserve the reasoning boundary around expert work; it does not automate professional judgment.
+A project often outlives the computer, chat session or model used to work on it. Reconstructing that context every time interrupts development: which files mattered, what the agent tried, why a decision was made, and what should happen next. AI Studio puts that continuity at the center of the workspace.
+
+## One project, across environments and providers
+
+- **Work locally, continue on the web.** Use local files, editors and development tools, then use the web workspace to inspect project state, coordinate AI work and pick up from retained history. The same project context should support both environments.
+- **Retain history without carrying it all on your laptop.** The hosted architecture uses S3 for durable agent history and retained artifacts. The aim is to retrieve what a task needs while keeping accumulated history and large historical data in cloud storage, rather than requiring a complete local copy.
+- **Develop projects and bring AI into client work.** Organize source files, project instructions, model runs, outputs and review decisions around the project. Adapt workflows for implementation, research, analysis and client deliverables, with client-specific access and operating policies.
+- **Try different models and companies without starting over.** Keep project notes, instructions, source references and agent history independently of a single provider's chat interface. That retained context becomes the starting point when a different model or provider adapter is selected.
+
+Context continuity means retaining the project record and deliberately supplying relevant context to the next run. Models still differ in context windows, tools and behavior; continuity does not promise identical answers or transfer a provider's hidden internal state.
+
+## What these examples show today
+
+The orchestration environment and its local/web integration are in development. This public repository provides Apache-2.0 building blocks and a synthetic, browser-only workspace tour. The tour illustrates project navigation, files, assistant roles and source-linked review records; its replies are deterministic mocks. Live S3 history retrieval, local/web synchronization and real provider switching belong to the operating application rather than this static demo.
+
+The evidence-review workflows below demonstrate one use of the broader environment: keeping sources, bounded AI assistance, evaluation, accountable expert judgment and an exact release or handoff connected. The same project foundation can support general development and client AI workflows. The sector-specific brief, evidence types, rubric and qualified roles remain configurable.
+
+The included detailed portfolio is a **synthetic public-service planning scenario**. The browser demo also includes engineering-assurance and research-synthesis examples. Everything is fictional: it does not assess a real project, client, standard or professional outcome.
 
 ## The demonstrated workflow
 
@@ -17,17 +34,19 @@ The browser demo and portable portfolio make every stage inspectable:
 7. **Exact release** — identify the commit, artifact digest, workflow, actor, time, and outcome.
 8. **Handoff** — state who receives the reviewed evidence pack and under what scope.
 
-This is the niche the examples are designed to test: evidence-to-decision-to-release continuity for small expert teams doing evidence-sensitive research, assurance, analysis, and client work. It is not a general-purpose chatbot, coding agent, data-pipeline builder, or automated compliance engine. The reusable product is the governance pattern, not the sector vocabulary.
+These examples focus on evidence-to-decision-to-release continuity. They give developers and expert teams a concrete workflow to adapt within AI Studio’s broader project orchestration environment, with project context and review records that remain useful across tools.
 
 ## Demo status
 
-**Live-demo status:** the v0.4.0 demo is published on GitHub Pages. This tree prepares v0.5.0 with a static project/file/model workspace tour; [`demo-provenance.json`](./demo-provenance.json) binds every browser asset to the planned immutable `v0.5.0` source path, and repository tests reject file or source-link drift. Until v0.5.0 is tagged and deployed by the protected workflow, use its checked source locally and treat v0.4.0 as the current public release.
+**Live demo:** [AI Studio workspace tour](https://categori-se.github.io/ai-studio-examples/), deployed from the immutable `v0.5.0` release. This working tree prepares an **unreleased v0.5.1 documentation update** explaining the broader orchestration direction; the published page retains its v0.5.0 copy until a new exact-tag deployment.
 
-- [Browse the current public example source](https://github.com/categori-se/ai-studio-examples)
-- [Inspect the current v0.4.0 release](https://github.com/categori-se/ai-studio-examples/tree/v0.4.0/local-demo)
-- Browse [`portfolio/`](./portfolio/) for the version 0.4 service-access example and its digest-linked evidence chain
+[`demo-provenance.json`](./demo-provenance.json) binds this draft's six browser assets to the planned `v0.5.1` source path. Repository checks reject asset or source-link drift. The quick start below uses the currently published v0.5.0 packages.
 
-The hosted route is intentionally static and synthetic. It cannot start models or compute, upload content, read private repositories, create pull requests, approve decisions, publish releases, or deploy infrastructure. The production build rejects an expanded file set, network APIs, externally hosted runtime assets, private infrastructure identifiers, and a package larger than 128 KiB.
+- [Browse the public example repository](https://github.com/categori-se/ai-studio-examples)
+- [Inspect the current v0.5.0 release](https://github.com/categori-se/ai-studio-examples/tree/v0.5.0)
+- Browse [`portfolio/`](./portfolio/) for the synthetic service-access example and its digest-linked evidence chain
+
+The hosted tour runs entirely in the browser using synthetic files and mock assistants. The operating application's sign-in, model execution, S3 history access, client connections and deployment controls are outside this static example.
 
 ## Reference scenario: synthetic service-access portfolio
 
@@ -61,7 +80,7 @@ The public code is useful by itself. Individuals and teams can copy, adapt, vali
 | Inspectable briefs, source links, findings, reviewer policy, rubrics, and release fixtures, including the synthetic service-access reference | Shared candidate review, append-only expert decisions, and audit context |
 | Low-idle-cost private-S3/CloudFront hosting template with no account-specific settings | Reviewed exact-SHA deployment requests and broader operational oversight |
 
-The private service is a coordination layer, not a prerequisite for using the open model. Credentials, customer material, multi-tenant infrastructure, proprietary execution policy, billing, and account-specific settings do not belong in these examples.
+The hosted AI Studio adds web orchestration, durable S3-backed project and agent history, and app-owned identity and execution controls over the portable foundation. Credentials, customer material, private infrastructure, proprietary execution policy, billing and account-specific settings retain their private boundaries. The public code remains usable locally or in self-managed workflows.
 
 ## Source quick start
 
@@ -131,6 +150,9 @@ The bucket uses `DeletionPolicy: Delete`, but CloudFormation cannot delete a non
 
 ## Who benefits
 
+- Developers who want to carry project context between local tools and a web workspace.
+- Consultants and teams integrating AI workflows into client projects.
+- Individuals comparing models and providers while retaining their own project history.
 - Domain experts who need source-linked findings and an explicit human gate beside AI-assisted work.
 - Research, engineering, policy, assurance, due-diligence, and advisory teams that need a reproducible handoff without adopting a large governance platform.
 - Service planners and technical reviewers who want to adapt a complete synthetic reference rather than start from an empty schema.

@@ -1,13 +1,13 @@
 {
   "name": "@categori/studio-examples",
-  "version": "0.5.0",
-  "description": "Sector-neutral governed expert-work demos and safe deployment placeholders",
+  "version": "0.5.1",
+  "description": "Local-to-web project orchestration examples with durable history and provider-neutral context",
   "private": true,
   "type": "module",
   "license": "Apache-2.0",
   "scripts": {
     "check:public-tree": "node scripts/check-public-tree.mjs",
-    "check:demo-release": "node scripts/verify-demo-assets.mjs --tag v0.5.0",
+    "check:demo-release": "node scripts/verify-demo-assets.mjs --tag v0.5.1",
     "test": "node --test test/*.test.js"
   },
   "dependencies": {

@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
   "repository": "categori-se/ai-studio-examples",
-  "tag": "v0.5.0",
-  "version": "0.5.0",
+  "tag": "v0.5.1",
+  "version": "0.5.1",
   "source_path": "docs",
-  "source_url": "https://github.com/categori-se/ai-studio-examples/tree/v0.5.0/docs",
+  "source_url": "https://github.com/categori-se/ai-studio-examples/tree/v0.5.1/docs",
   "files": {
     ".nojekyll": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "app.js": "sha256:f287b65216a3e80637b347501bb8914e615e1b5b6b441eab2e2e3a88878007d4",
     "demo-model.js": "sha256:197e7493f3ec88d94a4c42b4833ba550825d7d43adddf7e3987bea69f1705cc0",
     "favicon.svg": "sha256:b2262e38d233da58067917fb2da3adf0a0894f77d4846b7b3c2e3c60810d3f25",
-    "index.html": "sha256:ed3298e4c28c110e860b66c6ded3de1efbe2c5a6039d1e008b6d87454a4db1ff",
+    "index.html": "sha256:7460527351f97231fc1e1412b56dd56c7c52bd7acef732ae5b62d83e55b58d7f",
     "styles.css": "sha256:f0f52333995a306d83da39671672dc0f38a5d287e78ed57ff2472e670992c7ac"
   }
 }

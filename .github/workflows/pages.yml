@@ -6,7 +6,7 @@ on:
       release_tag:
         description: Immutable Studio Examples release tag
         required: true
-        default: v0.5.0
+        default: v0.5.1
         type: string
       release_sha:
         description: Exact 40-character commit SHA resolved by the release tag
