@@ -38,12 +38,12 @@ These examples focus on evidence-to-decision-to-release continuity. They give de
 
 ## Demo status
 
-**Live demo:** [AI Studio workspace tour](https://categori-se.github.io/ai-studio-examples/), deployed from the immutable `v0.5.0` release. This working tree prepares an **unreleased v0.5.1 documentation update** explaining the broader orchestration direction; the published page retains its v0.5.0 copy until a new exact-tag deployment.
+[Explore the live AI Studio workspace tour](https://categori-se.github.io/ai-studio-examples/). The site is deployed from an exact released tag and commit; its source link identifies the version being served.
 
-[`demo-provenance.json`](./demo-provenance.json) binds this draft's six browser assets to the planned `v0.5.1` source path. Repository checks reject asset or source-link drift. The quick start below uses the currently published v0.5.0 packages.
+This tree contains the `v0.5.1` documentation update. [`demo-provenance.json`](./demo-provenance.json) binds all six browser assets to that source version, and repository checks reject asset or source-link drift. The quick start uses Examples `v0.5.1` with the exact Contracts/Core `v0.5.0` dependencies. Those tags become available through their protected source releases.
 
 - [Browse the public example repository](https://github.com/categori-se/ai-studio-examples)
-- [Inspect the current v0.5.0 release](https://github.com/categori-se/ai-studio-examples/tree/v0.5.0)
+- [Inspect the v0.5.1 example source](https://github.com/categori-se/ai-studio-examples/tree/v0.5.1)
 - Browse [`portfolio/`](./portfolio/) for the synthetic service-access example and its digest-linked evidence chain
 
 The hosted tour runs entirely in the browser using synthetic files and mock assistants. The operating application's sign-in, model execution, S3 history access, client connections and deployment controls are outside this static example.
@@ -89,7 +89,7 @@ Node.js 24 or later is required. The packages are not yet published to npm, so c
 ```bash
 git clone --branch v0.5.0 --depth 1 https://github.com/categori-se/ai-studio-contracts.git studio-contracts
 git clone --branch v0.5.0 --depth 1 https://github.com/categori-se/ai-studio-core.git studio-core
-git clone --branch v0.5.0 --depth 1 https://github.com/categori-se/ai-studio-examples.git studio-examples
+git clone --branch v0.5.1 --depth 1 https://github.com/categori-se/ai-studio-examples.git studio-examples
 
 cd studio-core
 npm install --no-save --package-lock=false ../studio-contracts

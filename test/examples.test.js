@@ -336,10 +336,15 @@ test("public workflows scan first and Pages deploys only an exact tag/SHA", asyn
   assert.equal(pagesWorkflow.on.workflow_dispatch.inputs.release_tag.default, `v${packageMetadata.version}`);
 });
 
-test("public quick starts pin the exact coordinated v0.5 release", async () => {
+test("public quick starts pin the declared Examples and dependency releases", async () => {
+  const metadata = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
   for (const relative of ["../README.md", "../docs/index.html"]) {
     const content = await readFile(new URL(relative, import.meta.url), "utf8");
-    assert.equal((content.match(/git clone --branch v0\.5\.0 --depth 1/g) || []).length, 3);
+    for (const [name, version] of Object.entries({
+      "studio-contracts": metadata.dependencies["@categori/studio-contracts"],
+      "studio-core": metadata.dependencies["@categori/studio-core"],
+      "studio-examples": metadata.version
+    })) assert.ok(content.includes(`git clone --branch v${version} --depth 1 https://github.com/categori-se/ai-${name}.git`));
     assert.doesNotMatch(content, /git clone https:\/\/github\.com\/categori-se\/studio-/);
   }
 });
